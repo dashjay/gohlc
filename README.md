@@ -40,4 +40,14 @@ this periodically, they even not feel the existence of persistence process.
 
 It is easy to run service as a gprc server, I'll provide the full code sample later. 
 
+## Benchmark
+
+If all goes well(persistent process), it can reach 1.5M QPS, if use batch get request, you can get 67M version if every 
+request get 50 versions.
+
+```
+hlc_test.go:56: finished 20000000 query & get 20000000 clocks in 12.70 sec
+hlc_test.go:77: finished 20000000 query & get 1000000000 clocks in 14.77 sec
+```
+
 
