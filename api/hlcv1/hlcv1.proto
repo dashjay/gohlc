@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package hlcv1;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "/hlcv1";
+
+
+message GetResp {
+  int64 clock = 1;
+}
+
+message BatchGetReq {
+  // default count is 1, means that only get one.
+  uint32 count = 1;
+  // if count is more than two, return_first can be set to reduce the size of the response
+  bool return_first = 2;
+}
+
+message BatchGetResp {
+  BatchGetReq Req = 1;
+  // if return_first specified true, first clock will be set
+  int64 first = 2;
+  // if request count more than one and return_first = false, all clock allocated will be set here
+  repeated int64 clocks = 3;
+}
+
+service HCLService{
+  rpc Get(google.protobuf.Empty) returns(GetResp);
+  rpc BatchGet(BatchGetReq) returns(BatchGetResp);
+}
